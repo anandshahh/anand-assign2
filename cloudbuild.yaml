@@ -1,0 +1,15 @@
+steps:
+  # Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/hip-girder-402314/my-python-app:${SHORT_SHA}', '.']
+
+  # Push the Docker image to Google Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/hip-girder-402314/my-python-app:${SHORT_SHA}']
+
+  # Update the Compute Engine instance with the new image
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['compute', 'instances', 'update-container', 'my-instance', '--container-image', 'gcr.io/hip-girder-402314/my-python-app:${SHORT_SHA}', '--zone', 'us-central1-a']
+
+images:
+  - 'gcr.io/hip-girder-402314/my-python-app:${SHORT_SHA}'
