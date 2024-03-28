@@ -1,5 +1,5 @@
 steps:
-  # Build the Docker image
+  # Build the Docker image test
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/hip-girder-402314/anand-assign2/flaskapp:${SHORT_SHA}', '.']
 
